@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f8f9fa"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <!-- Texto inicial -->
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:text="@string/calculadora"
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="bold"
+        android:textColor="#2d3748"
+        android:textSize="32sp"
+        android:gravity="center"
+        android:layout_marginBottom="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <!-- Pantalla LCD -->
+    <EditText
+        android:id="@+id/lcd"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="32dp"
+        android:autofillHints=""
+        android:enabled="false"
+        android:fontFamily="monospace"
+        android:inputType="number"
+        android:padding="20dp"
+        android:text="@string/_0"
+        android:textAlignment="center"
+        android:textColor="#1a202c"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        tools:ignore="LabelFor,DuplicateSpeakableTextCheck,VisualLintTextFieldSize">
+
+    </EditText>
+
+    <!-- Botón 7 -->
+    <Button
+        android:id="@+id/btn_7"
+        android:text="@string/_7"
+        android:layout_below="@id/lcd"
+        android:layout_marginEnd="5dp"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/pink"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:elevation="4dp">
+
+    </Button>
+
+    <!-- Botón 8 -->
+    <Button
+        android:id="@+id/btn_8"
+        android:text="@string/_8"
+        android:layout_toEndOf="@id/btn_7"
+        android:layout_alignTop="@id/btn_7"
+        android:layout_marginEnd="5dp"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/pink"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:elevation="4dp">
+
+    </Button>
+
+    <!-- Botón 9 -->
+    <Button
+        android:id="@+id/btn_9"
+        android:text="@string/_9"
+        android:layout_toEndOf="@id/btn_8"
+        android:layout_alignTop="@id/btn_8"
+        android:layout_marginEnd="5dp"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/pink"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:elevation="4dp">
+
+    </Button>
+
+    <!-- Botón sumar -->
+    <Button
+        android:id="@+id/btn_sumar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignTop="@id/btn_9"
+        android:layout_toEndOf="@id/btn_9"
+        android:backgroundTint="@color/green"
+        android:elevation="4dp"
+        android:text="@string/suma"
+        android:textColor="#1B5E20"
+        android:textSize="28sp"
+        android:textStyle="bold">
+
+    </Button>
+
+    <!-- Botón 4 -->
+    <Button
+        android:id="@+id/btn_4"
+        android:text="@string/_4"
+        android:layout_below="@id/btn_7"
+        android:layout_marginEnd="5dp"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/pink"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:elevation="4dp">
+    </Button>
+
+    <!-- Botón 5 -->
+    <Button
+        android:id="@+id/btn_5"
+        android:text="@string/_5"
+        android:layout_toEndOf="@id/btn_4"
+        android:layout_alignTop="@id/btn_4"
+        android:layout_marginEnd="5dp"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/pink"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:elevation="4dp">
+
+    </Button>
+
+    <!-- Botón 6 -->
+    <Button
+        android:id="@+id/btn_6"
+        android:text="@string/_6"
+        android:layout_toEndOf="@id/btn_5"
+        android:layout_alignTop="@id/btn_5"
+        android:layout_marginEnd="5dp"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/pink"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:elevation="4dp">
+
+    </Button>
+
+    <!-- Botón restar -->
+    <Button
+        android:id="@+id/btn_restar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignTop="@id/btn_6"
+        android:layout_toEndOf="@id/btn_6"
+        android:backgroundTint="@color/green"
+        android:elevation="4dp"
+        android:text="@string/restar"
+        android:textColor="#1B5E20"
+        android:textSize="28sp"
+        android:textStyle="bold">
+
+    </Button>
+
+    <!-- Botón 1 -->
+    <Button
+        android:id="@+id/btn_1"
+        android:text="@string/_1"
+        android:layout_below="@id/btn_4"
+        android:layout_marginEnd="5dp"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/pink"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:elevation="4dp">
+
+    </Button>
+
+    <!-- Botón 2 -->
+    <Button
+        android:id="@+id/btn_2"
+        android:text="@string/_2"
+        android:layout_toEndOf="@id/btn_1"
+        android:layout_alignTop="@id/btn_1"
+        android:layout_marginEnd="5dp"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/pink"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:elevation="4dp">
+
+    </Button>
+
+    <!-- Botón 3 -->
+    <Button
+        android:id="@+id/btn_3"
+        android:text="@string/_3"
+        android:layout_toEndOf="@id/btn_2"
+        android:layout_alignTop="@id/btn_2"
+        android:layout_marginEnd="5dp"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/pink"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:elevation="4dp">
+
+    </Button>
+
+    <!-- Botón multiplicar -->
+    <Button
+        android:id="@+id/btn_multiplicar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignTop="@id/btn_3"
+        android:layout_toEndOf="@id/btn_3"
+        android:backgroundTint="@color/green"
+        android:elevation="4dp"
+        android:text="@string/multiplicar"
+        android:textColor="#1B5E20"
+        android:textSize="28sp"
+        android:textStyle="bold">
+
+    </Button>
+
+    <!-- Botón 0 -->
+    <Button
+        android:id="@+id/btn_0"
+        android:text="@string/_0"
+        android:layout_below="@id/btn_2"
+        android:layout_marginEnd="5dp"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/pink"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:elevation="4dp">
+
+    </Button>
+
+    <!-- Botón borrar -->
+    <Button
+        android:id="@+id/btn_borrar"
+        android:text="@string/ac"
+        android:layout_toEndOf="@id/btn_0"
+        android:layout_alignTop="@id/btn_0"
+        android:layout_marginEnd="5dp"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/red"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:elevation="4dp">
+
+    </Button>
+
+    <!-- Botón igual -->
+    <Button
+        android:id="@+id/btn_igual"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignTop="@id/btn_borrar"
+        android:layout_marginEnd="5dp"
+        android:layout_toEndOf="@id/btn_borrar"
+        android:backgroundTint="@color/green"
+        android:elevation="4dp"
+        android:text="@string/igual"
+        android:textColor="#1B5E20"
+        android:textSize="28sp"
+        android:textStyle="bold">
+
+    </Button>
+    <!-- Botón division -->
+    <Button
+        android:id="@+id/btn_division"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignTop="@id/btn_igual"
+        android:layout_toEndOf="@id/btn_igual"
+        android:backgroundTint="@color/green"
+        android:elevation="4dp"
+        android:text="@string/division"
+        android:textColor="#1B5E20"
+        android:textSize="28sp"
+        android:textStyle="bold">
+
+    </Button>
+
+
+</RelativeLayout>
