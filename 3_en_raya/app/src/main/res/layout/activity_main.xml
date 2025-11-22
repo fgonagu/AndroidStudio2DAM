@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F1F2F2"
     tools:context=".MainActivity">
 
     <ImageButton
@@ -18,24 +19,24 @@
         app:srcCompat="@android:drawable/btn_star_big_on" />
 
     <ImageButton
-        android:id="@+id/imageButton9"
+        android:id="@+id/imageButton8"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="12dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton8"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton9"
         app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintStart_toEndOf="@+id/imageButton7"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton6"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton5"
         app:srcCompat="@android:drawable/btn_star_big_on" />
 
     <ImageButton
-        android:id="@+id/imageButton8"
+        android:id="@+id/imageButton9"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="36dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton5"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton6"
         app:srcCompat="@android:drawable/btn_star_big_on" />
 
     <ImageButton
@@ -47,34 +48,34 @@
         android:layout_marginBottom="15dp"
         app:layout_constraintBottom_toTopOf="@+id/imageButton7"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton"
-        app:srcCompat="@android:drawable/btn_star_big_on" />
-
-    <ImageButton
-        android:id="@+id/imageButton6"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton9"
-        app:layout_constraintStart_toEndOf="@+id/imageButton4"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton2"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton1"
         app:srcCompat="@android:drawable/btn_star_big_on" />
 
     <ImageButton
         android:id="@+id/imageButton5"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton8"
+        app:layout_constraintStart_toEndOf="@+id/imageButton4"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton2"
+        app:srcCompat="@android:drawable/btn_star_big_on" />
+
+    <ImageButton
+        android:id="@+id/imageButton6"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toEndOf="@+id/imageButton6"
+        app:layout_constraintStart_toEndOf="@+id/imageButton5"
         app:layout_constraintTop_toBottomOf="@+id/imageButton3"
         app:srcCompat="@android:drawable/btn_star_big_on" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
@@ -85,7 +86,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/imageButton1"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="36dp"
@@ -94,7 +95,7 @@
         app:layout_constraintEnd_toStartOf="@+id/imageButton2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitulo"
         app:srcCompat="@android:drawable/btn_star_big_on" />
 
     <ImageButton
@@ -105,8 +106,8 @@
         android:layout_marginTop="26dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toStartOf="@+id/imageButton3"
-        app:layout_constraintStart_toEndOf="@+id/imageButton"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintStart_toEndOf="@+id/imageButton1"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitulo"
         app:srcCompat="@android:drawable/btn_star_big_on" />
 
     <ImageButton
@@ -118,7 +119,7 @@
         android:layout_marginEnd="36dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageButton2"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitulo"
         app:srcCompat="@android:drawable/btn_star_big_on" />
 
     <View
@@ -131,9 +132,10 @@
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton9" />
+        app:layout_constraintTop_toBottomOf="@+id/imageButton8" />
 
     <RadioGroup
+        android:id="@+id/radioGroup"
         android:layout_width="202dp"
         android:layout_height="108dp"
         android:layout_marginStart="28dp"
@@ -142,16 +144,53 @@
         app:layout_constraintTop_toBottomOf="@+id/divider">
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/rbFacil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Tranquilitos, ¿eh?" />
 
         <RadioButton
-            android:id="@+id/radioButton4"
+            android:id="@+id/rbDificil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Me gustan los retos" />
     </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_Start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="48dp"
+        android:backgroundTint="#D5D6D6"
+        android:text="Start"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <ImageView
+        android:id="@+id/ivTurno"
+        android:layout_width="51dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/divider"
+        app:layout_constraintHorizontal_bias="0.558"
+        app:layout_constraintStart_toEndOf="@+id/radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/btn_Start"
+        app:srcCompat="@drawable/usericon" />
+
+    <TextView
+        android:id="@+id/tvTurno"
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="56dp"
+        android:fontFamily="casual"
+        android:text="Turno"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="@+id/divider"
+        app:layout_constraintTop_toBottomOf="@+id/ivTurno" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
