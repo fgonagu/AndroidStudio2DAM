@@ -1,8 +1,12 @@
 package com.example.tresenraya;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -10,9 +14,9 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import java.util.Random;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,18 +26,36 @@ public class MainActivity extends AppCompatActivity {
     private RadioButton rbFacil, rbDificil;
     private RadioGroup radioGroup;
     private TextView tvTitulo, tvTurno;
+    private ImageView ivTurno;
+
 
     //Variables Lógica del juego
     private boolean juegoIniciado = false; //Controla si el juego está activo
     private int[] tablero = new int[9];
     private int turno = 1; //1 -> Turno del usuario (empieza el usuario por defecto)
     private int nivelDificultad = 0; // 0 -> no seleccionado, 1 -> Fácil, 2 -> Difícil
+    private Sounds gameSounds;
+    // Combinaciones ganadoras del tablero
+    private final int[][] LINEAS_GANADORAS = {
+            {0,1,2}, {3,4,5}, {6,7,8}, // Filas Horizontales
+            {0,3,6}, {1,4,7}, {2,5,8}, // Columnas Verticales
+            {0,4,8}, {2,4,6}            // Diagonales
+    };
+    // Variable Handler para gestionar el mecanismo de retraso para el movimiento de la máquina (2 a 5 segundos)
+    private Handler handler = new Handler(Looper.getMainLooper());
+    //Variable para guardar la última jugada del usuario
+    private int ultimaJugadaUsuario = -1; // Almacena el índice de la última casilla marcada por el usuario
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+        // Inicializamos el Gestos de Sonidos
+        gameSounds = new Sounds(this);
+
 
         // Vinculación de vistas
         btnStart = findViewById(R.id.btn_Start);
@@ -42,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
         radioGroup = findViewById(R.id.radioGroup);
         tvTitulo = findViewById(R.id.tvTitulo);
         tvTurno = findViewById(R.id.tvTurno);
+        ivTurno = findViewById(R.id.ivTurno);
+
 
         //Inicializamos Array de casillas (ImageButtons)
         casillas = new ImageButton[9];
@@ -65,7 +89,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Implementamos los Listeners para los controles
         setupRadioButtonsListener();
-        //setupStartStopButton();
+        setupStartStopButton();
+        setupBoardListeners();
 
     }
 
@@ -107,10 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 resetearPartida();
                 // Mensaje de finalización
                 Toast.makeText(this, "The game is stopped", Toast.LENGTH_SHORT).show();
-
             }
-
-
         });
     }
 
@@ -155,7 +177,236 @@ public class MainActivity extends AppCompatActivity {
         nivelDificultad = 0;
         tvTitulo.setText("3 en Raya");
 
-        // NOTA: Aquí se deben detener los sonidos finales si estuvieran sonando (Req 10).
+        // Detenemos la música final si está sonando
+        if(gameSounds != null){
+            gameSounds.stopMusic();
+        }
+    }
+
+    // Metodo para almacenar el índice del array (i) en el tag de cada botón (para saber qué casilla fue pulsada cuando se dispara el evento onClick)
+    private void setupBoardListeners(){
+        for (int i = 0; i < 9; i++) {
+            final int posicion = i; // Índice de la casilla (0 a 8)
+
+            // Usamos el tag para sociar la vista con el índice del tablero lógico
+            casillas[i].setTag(posicion);
+
+            casillas[i].setOnClickListener(v -> {
+                // Solo permitimos la jugada si el juego está iniciado y es el turno del usuario (1)
+                if(juegoIniciado && turno == 1){
+                    // Obtenemos la posición guardada en el tag de la vista pulsada
+                    int pos = (int) v.getTag();
+                    jugadaUsuario(pos);
+                }
+            });
+        }
+    }
+
+    // Metodo para registrar el movimiento del usuario, actualizar la UI, reproducir el sonido y pasar el turno
+    private void jugadaUsuario(int posicion){
+        // 1. Verificamos que la casilla esté vacía
+        if(tablero[posicion] == 0){
+            // 2. Actualizamos el tablero lógico
+            tablero[posicion] = 1; // 1 = Usuario
+
+            // Registramos la jugada del usuario para su posterior uso en la IA (nivel dificil del juego)
+            ultimaJugadaUsuario = posicion;
+
+
+            //3. Actualizamos la UI
+            casillas[posicion].setBackgroundColor(android.graphics.Color.TRANSPARENT); // Establecemos el fondo del botón a transparente
+            casillas[posicion].setImageResource(R.drawable.usericon);
+            casillas[posicion].setEnabled(false); // Deshabilitamos la casilla pulsada
+
+            // 4. Reproducimos el sonido
+            gameSounds.playUserSound();
+
+            // 5. Comprobamos estado del juego y cambiamos el turno
+            if(!comprobarEstadoJuego()){
+                turno = 2; // Cambiamos el turno de Android
+                actualizarIndicadorTurno(); // Actualizamos ivTurno
+
+                // Ejecutamos la jugada de Android
+                ejecutarTurnoAndroid();
+            }
+        }
+    }
+    // Metodo para comprobar si ha hecho 3 en raya (GANADOR)
+    private boolean comprobarGanador(int jugador){
+        for(int[] linea : LINEAS_GANADORAS){
+            if(tablero[linea[0]] == jugador && tablero[linea[1]] == jugador && tablero[linea[2]] == jugador){
+                return true; // Devuelve true si encunetra una línea
+            }
+        }
+        return false;
+    }
+
+    // Metodo para comprobar el estado del juego. Devuelve true si el juego ha terminado (VICTORIA o EMPATE)
+    private boolean comprobarEstadoJuego(){
+        // 1. Verificamos si el usuario (1) ha ganado
+        if(comprobarGanador(1)){
+            finalizarPartida(1); // 1 = Usuario gana
+            return true;
+        }
+        // 2. Verificamos si Android (2) ha ganado
+        if(comprobarGanador(2)){
+            finalizarPartida(2); // 2 = Android gana
+            return true;
+        }
+        // 3. Verificamos si hay empate
+        boolean tableroLleno = true;
+        for(int casilla : tablero){
+            if(casilla == 0){ // Si encontramos una casilla vacía
+                tableroLleno = false;
+                break;
+            }
+        }
+        if(tableroLleno){
+            finalizarPartida(0); // 0 = Empate
+            return true;
+            }
+        // El juego continúa
+        return false;
+        }
+
+    //Metodo para finalizar el juego: detiene la partida y muestra el resutlado
+    private void finalizarPartida(int resultado){
+        // 1. Detenemos el juego y deshabilitamos casillas
+        juegoIniciado = false;
+        for (ImageButton casilla : casillas) {
+            casilla.setEnabled(false);
+        }
+        // Pausamos la música de fondo ANTES de poner la música de resultados
+        gameSounds.stopBackgroundMusic();
+
+        // 2. Mostramos resultado y reproducimos música
+        String mensajeResultado;
+        if(resultado == 1){
+            mensajeResultado = "You Win!";
+            gameSounds.playWinMusic(); // Música de victoria
+        } else if (resultado == 2){
+            mensajeResultado = "Android Win!";
+            gameSounds.playLoseMusic(); // Música de derrota
+        } else {
+            mensajeResultado = "Ooops!, nobody Wins";
+            gameSounds.playDrawMusic(); // Música de empate
+        }
+        // Mostramos el resultado en el Textview superior y como Toast
+        tvTitulo.setText("Partida Finalizada");
+        Toast.makeText(this, mensajeResultado, Toast.LENGTH_SHORT).show();
+
+        // 4. LANZAMOS LA PANTALLA DE RESULTADOS
+        Intent intent = new Intent(this, ResultadoActivity.class);
+        // Pasamos el resultado como extra al intent
+        intent.putExtra(ResultadoActivity.EXTRA_RESULTADO, mensajeResultado);
+        startActivity(intent);
+
+    }
+
+    // Metodo para actualizar el icono de turno (en ivTurno pondrá el icono del usuario o de Android)
+    // y actualizará el texto del TextView (tvTurno)
+    private void actualizarIndicadorTurno(){
+        if(turno == 1){
+            // Turno del usuario (1)
+            ivTurno.setImageResource(R.drawable.usericon);
+            tvTurno.setText("Usuario");
+        } else if(turno == 2){
+            // Turno de Android (2)
+            ivTurno.setImageResource(R.drawable.androidicon);
+            tvTurno.setText("Android");
+        }
+    }
+    // Metodo para ejecutar el turno de Android
+    private void ejecutarTurnoAndroid(){
+        // Creamos un tiempo aleatorio entre 2 y 5 segundos para simular el movimiento del Android
+        Random r = new Random();
+        int delay = r.nextInt(3001) + 2000; // Genera un valor entre 2000 y 5000 milisegundos
+
+        // 1. Dehabilitamos el tablero para que el usuario no interrumpa la espera del Android
+        for (ImageButton casilla : casillas) {
+            casilla.setEnabled(false);
+        }
+
+        // 2. Definimos la tarea (Runnable) a ejecutar después del retraso
+        Runnable runnableAndroid = () -> {
+            // Seleccionamos la estrategia de la máquina (aleatoria)
+            AndroidJugada ia;
+            if(nivelDificultad == 1){
+                ia = new Aleatoria(tablero); // Nivel 1: Aleatorio
+            } else {
+                //Nivel 2: Marcará la casilla adyacente a la última jugada del usuario (le pasamos el tablero y la última jugada del usuario)
+                ia = new Directa(tablero, ultimaJugadaUsuario);
+            }
+            // Obtenemos la posición de la jugada
+            int posicion = ia.play();
+
+            // Ejecutamos el movimiento si es válido
+            if(posicion != -1){
+                jugarAndroid(posicion);
+            }
+
+            // Volvemos a habilitar el tablero si el juego continúa
+            if(juegoIniciado && turno == 1){
+                for (int i = 0; i < 9; i++) {
+                    if(tablero[i] == 0){
+                        casillas[i].setEnabled(true);
+                    }
+                }
+            }
+        };
+        // 3. Ejecutamos la tarea con el delay
+        handler.postDelayed(runnableAndroid, delay);
+    }
+
+    // Metodo que realiza el movimiento de Android
+    private void jugarAndroid(int posicion){
+        // 1. Actualizamos el tablero lógico
+        tablero[posicion] = 2; // 2 = Android
+
+        // 2. Actualizamos la UI
+        casillas[posicion].setBackgroundColor(android.graphics.Color.TRANSPARENT); // Establecemos el fondo del botón a transparente
+        casillas[posicion].setImageResource(R.drawable.androidicon);
+        casillas[posicion].setEnabled(false); // Deshabilitamos la casilla pulsada
+
+        // 3. Reproducimos el sonido
+        gameSounds.playAndroidSound();
+
+        // 4. Comprobamos el estado del juego y cambiamos el turno
+        if(!comprobarEstadoJuego()){
+            turno = 1; // Cambiamos el turno de Usuario
+            actualizarIndicadorTurno(); // Actualizamos ivTurno
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // La música se reanuda cuando la Activity vuelve a estar en primer plano
+        if (gameSounds != null) {
+            gameSounds.startBackgroundMusic();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // La música se pausa cuando la Activity pierde el foco (ej: al abrir la pantalla de resultados)
+        if (gameSounds != null) {
+            gameSounds.stopBackgroundMusic();
+        }
+    }
+
+    // Sobreescribimos el metodo onDestroy() para liberar los recursos de sonido del MediaPlayer cuando la Activity se cierra
+    //y para detener cualquier tarea pendiente del Handler
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //Detenemos cualquier tarea pendiente del Handler
+        handler.removeCallbacksAndMessages(null);
+        if (gameSounds != null) {
+            gameSounds.release();
+        }
+
     }
 }
 
