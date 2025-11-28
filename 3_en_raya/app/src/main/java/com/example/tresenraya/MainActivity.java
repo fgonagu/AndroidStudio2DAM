@@ -1,5 +1,6 @@
 package com.example.tresenraya;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,12 +12,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.Random;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,10 +26,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvTitulo, tvTurno;
     private ImageView ivTurno;
 
-
     //Variables Lógica del juego
     private boolean juegoIniciado = false; //Controla si el juego está activo
-    private int[] tablero = new int[9];
+    private final int[] tablero = new int[9];
     private int turno = 1; //1 -> Turno del usuario (empieza el usuario por defecto)
     private int nivelDificultad = 0; // 0 -> no seleccionado, 1 -> Fácil, 2 -> Difícil
     private Sounds gameSounds;
@@ -42,10 +39,9 @@ public class MainActivity extends AppCompatActivity {
             {0,4,8}, {2,4,6}            // Diagonales
     };
     // Variable Handler para gestionar el mecanismo de retraso para el movimiento de la máquina (2 a 5 segundos)
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private final Handler handler = new Handler(Looper.getMainLooper());
     //Variable para guardar la última jugada del usuario
     private int ultimaJugadaUsuario = -1; // Almacena el índice de la última casilla marcada por el usuario
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         // Inicializamos el Gestos de Sonidos
         gameSounds = new Sounds(this);
 
-
         // Vinculación de vistas
         btnStart = findViewById(R.id.btn_Start);
         rbFacil = findViewById(R.id.rbFacil);
@@ -65,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
         tvTitulo = findViewById(R.id.tvTitulo);
         tvTurno = findViewById(R.id.tvTurno);
         ivTurno = findViewById(R.id.ivTurno);
-
 
         //Inicializamos Array de casillas (ImageButtons)
         casillas = new ImageButton[9];
@@ -91,10 +85,9 @@ public class MainActivity extends AppCompatActivity {
         setupRadioButtonsListener();
         setupStartStopButton();
         setupBoardListeners();
-
     }
 
-    // Metodos
+    // METODOS
     //Metodo para elegir el nivel de dificultad del juego
     private void setupRadioButtonsListener() {
         //Solo se puede seleccionar la dificultad si el juego No ha iniciado
@@ -137,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Metodo para iniciar partida
+    @SuppressLint("SetTextI18n")
     private void iniciarPartida() {
         juegoIniciado = true;
         btnStart.setText("STOP"); // Cambiamos el texto del botón de Start a Stop
@@ -158,10 +152,10 @@ public class MainActivity extends AppCompatActivity {
         // Necesitaremos un metodo para actualizar el ícono de turno (ivTurno) más tarde.
     }
 
+    @SuppressLint("SetTextI18n")
     private void resetearPartida() {
         juegoIniciado = false;
         btnStart.setText("START"); // Cambiamos el texto del botón de Stop a Start
-
 
         // 1. Deshabilitar el tablero y limpiar casillas
         for (int i = 0; i < 9; i++) {
@@ -185,13 +179,11 @@ public class MainActivity extends AppCompatActivity {
 
     // Metodo para almacenar el índice del array (i) en el tag de cada botón (para saber qué casilla fue pulsada cuando se dispara el evento onClick)
     private void setupBoardListeners(){
-        for (int i = 0; i < 9; i++) {
-            final int posicion = i; // Índice de la casilla (0 a 8)
+        for (int posicion = 0; posicion < 9; posicion++) {
 
             // Usamos el tag para sociar la vista con el índice del tablero lógico
-            casillas[i].setTag(posicion);
-
-            casillas[i].setOnClickListener(v -> {
+            casillas[posicion].setTag(posicion);
+            casillas[posicion].setOnClickListener(v -> {
                 // Solo permitimos la jugada si el juego está iniciado y es el turno del usuario (1)
                 if(juegoIniciado && turno == 1){
                     // Obtenemos la posición guardada en el tag de la vista pulsada
@@ -222,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
             gameSounds.playUserSound();
 
             // 5. Comprobamos estado del juego y cambiamos el turno
-            if(!comprobarEstadoJuego()){
+            if(comprobarEstadoJuego()){
                 turno = 2; // Cambiamos el turno de Android
                 actualizarIndicadorTurno(); // Actualizamos ivTurno
 
@@ -246,12 +238,12 @@ public class MainActivity extends AppCompatActivity {
         // 1. Verificamos si el usuario (1) ha ganado
         if(comprobarGanador(1)){
             finalizarPartida(1); // 1 = Usuario gana
-            return true;
+            return false;
         }
         // 2. Verificamos si Android (2) ha ganado
         if(comprobarGanador(2)){
             finalizarPartida(2); // 2 = Android gana
-            return true;
+            return false;
         }
         // 3. Verificamos si hay empate
         boolean tableroLleno = true;
@@ -263,13 +255,14 @@ public class MainActivity extends AppCompatActivity {
         }
         if(tableroLleno){
             finalizarPartida(0); // 0 = Empate
-            return true;
+            return false;
             }
         // El juego continúa
-        return false;
+        return true;
         }
 
     //Metodo para finalizar el juego: detiene la partida y muestra el resutlado
+    @SuppressLint("SetTextI18n")
     private void finalizarPartida(int resultado){
         // 1. Detenemos el juego y deshabilitamos casillas
         juegoIniciado = false;
@@ -305,6 +298,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Metodo para actualizar el icono de turno (en ivTurno pondrá el icono del usuario o de Android)
     // y actualizará el texto del TextView (tvTurno)
+    @SuppressLint("SetTextI18n")
     private void actualizarIndicadorTurno(){
         if(turno == 1){
             // Turno del usuario (1)
@@ -372,7 +366,7 @@ public class MainActivity extends AppCompatActivity {
         gameSounds.playAndroidSound();
 
         // 4. Comprobamos el estado del juego y cambiamos el turno
-        if(!comprobarEstadoJuego()){
+        if(comprobarEstadoJuego()){
             turno = 1; // Cambiamos el turno de Usuario
             actualizarIndicadorTurno(); // Actualizamos ivTurno
         }

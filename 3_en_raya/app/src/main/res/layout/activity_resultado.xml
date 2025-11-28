@@ -13,7 +13,7 @@
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_marginTop="80dp"
-        android:contentDescription="Icono de Resultado"
+        android:contentDescription="@string/icono_de_resultado"
         android:src="@drawable/trophy_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,11 +39,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
         android:padding="16dp"
-        android:text="JUGAR DE NUEVO"
+        android:text="@string/jugar_de_nuevo"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintWidth_percent="0.85" />
+        app:layout_constraintWidth_percent="0.85"
+        tools:ignore="VisualLintButtonSize" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

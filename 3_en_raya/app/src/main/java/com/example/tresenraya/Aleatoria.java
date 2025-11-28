@@ -3,14 +3,11 @@ package com.example.tresenraya;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 public class Aleatoria extends AndroidJugada {
-
     // Constructor
     public Aleatoria(int[] tablero) {
         super(tablero);
     }
-
     @Override
     public int play() {
         // 1. Encontramos todas las casillas que están vacías y las guardamos en un arraylist

@@ -2,14 +2,12 @@ package com.example.tresenraya;
 
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.provider.MediaStore;
-
 public class Sounds {
-    private MediaPlayer userPlayer;
-    private MediaPlayer androidPlayer;
-    private MediaPlayer winMusic;
-    private MediaPlayer loseMusic;
-    private MediaPlayer drawMusic;
+    private final MediaPlayer userPlayer;
+    private final MediaPlayer androidPlayer;
+    private final MediaPlayer winMusic;
+    private final MediaPlayer loseMusic;
+    private final MediaPlayer drawMusic;
     private MediaPlayer backgroundMusicPlayer;
 
     //Constructor
@@ -103,7 +101,6 @@ public class Sounds {
         }
 
     }
-
 
     // Metodo para liberar recursos cuando la Activity se destruye
     public void release() {

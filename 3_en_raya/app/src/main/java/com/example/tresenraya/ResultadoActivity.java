@@ -1,5 +1,6 @@
 package com.example.tresenraya;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,9 +8,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class ResultadoActivity extends Activity {
-
     public static final String EXTRA_RESULTADO = "com.example.tresenraya.resultado";
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

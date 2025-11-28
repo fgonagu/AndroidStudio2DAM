@@ -3,13 +3,11 @@ package com.example.tresenraya;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 public class Directa extends AndroidJugada{
-
-    private int ultimaJugadaUsuario;
+    private final int ultimaJugadaUsuario;
 
     // Mapa que define las casillas vecinas para cada posición (0-8)
-    //Ejemplo:  la casilla 0 tiene como vecinas a 1, 3 y 4
+    //Ejemplo: la casilla 0 tiene como vecinas a 1, 3 y 4
     private static final int[][] MAPA_VECINAS = {
             {1, 3, 4},              //0
             {0, 2, 3, 4, 5},        //1
