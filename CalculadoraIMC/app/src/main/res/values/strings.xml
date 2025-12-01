@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">CalculadoraIMC</string>
+    <string name="txtPesoActual">Peso Actual (kg)</string>
+    <string name="titulo">Calcula tu Peso Ideal</string>
+    <string name="txtAltura">Altura (cm)</string>
+    <string name="txtNacimiento">Año Nacimiento</string>
+    <string name="sexFemale">Mujer</string>
+    <string name="sexMale">Hombre</string>
+    <string name="txtSexo">Sexo</string>
+    <string name="txtMetodo">Método</string>
+    <string name="rbPerrault">Perrault</string>
+    <string name="rbBroca">Broca</string>
+    <string name="rbWanDerVael">Wan Der Vael</string>
+    <string name="btnCalculate">CALCULAR</string>
+    <string name="txtPesoIdeal">Peso Ideal</string>
+</resources>
