@@ -24,10 +24,6 @@ public class MainActivity extends AppCompatActivity {
     private RadioButton rbPerrault, rbBroca, rbWanDerVael;
     private TextView tvPesoIdealResultado;
     private ImageView ivResultadoGrafico;
-    private Button btnCalcular;
-
-
-
 
 
     @Override
@@ -63,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         ivResultadoGrafico = findViewById(R.id.imgResult);
 
         //Button
-        btnCalcular = findViewById(R.id.btnCalculate);
+        Button btnCalcular = findViewById(R.id.btnCalculate);
 
         //Asociamos el evento click al botón
         btnCalcular.setOnClickListener(v -> calcularPesoIdeal());
@@ -125,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //Aplicación de las fórmulas
-        double pesoIdeal = 0.0;
+        double pesoIdeal;
 
         if(esPerrault){
             //FÓRMULA PERRAULT: Altura - 100 + ((edad/10) * 0.9)
@@ -133,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         }else if(esBroca){
             //FÓRMULA BROCA: Altura - 100
             pesoIdeal = alturaCm - 100;
-        }else if(esWanDerVael){
+        }else {
             //FÓRMULA WAN DER VAEL (según sexo)
             if(esMujer){
                 //FÓRMULA WAN DER VAEL MUJER: (Altura - 150) * 0.6 + 50
