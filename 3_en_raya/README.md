@@ -33,7 +33,18 @@ Aplicación para Android desarrollada en **Java** que implementa el clásico jue
 * **`Aleatoria` / `Directa`**:
     * **Implementación de la IA**: Clases concretas que extienden `AndroidJugada` y proveen los dos niveles de dificultad: **Fácil** (aleatorio) y **Difícil** (adyacente).
 
+### Flujo de Usuario y Multimedia
 
+* **`Sounds`**:
+    * **Gestor de Audio**: Centraliza la inicialización, reproducción y liberación de todos los recursos de sonido (`MediaPlayer`).
+    * **Experiencia Multimedia**: Maneja la música de fondo, efectos de jugada y música de resultado.
+
+* **`ResultadoActivity`**:
+    * **Mensaje Final**: Muestra el resultado de la partida (Victoria, Derrota, Empate).
+    * **Navegación**: Permite reiniciar el juego de forma limpia.
+
+* **`SplashScreen`**:
+    * **Introducción Visual**: Es la primera Activity que se carga, mostrando una pantalla de bienvenida temporizada.
 ---
 
 ## Tecnologías Utilizadas
