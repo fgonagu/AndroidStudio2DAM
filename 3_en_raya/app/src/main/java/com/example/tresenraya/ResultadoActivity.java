@@ -14,7 +14,7 @@ public class ResultadoActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_resultado); // Asegúrate de crear este layout
+        setContentView(R.layout.activity_resultado);
 
         TextView tvResultado = findViewById(R.id.tvResultadoFinal); // Asumiendo este ID
 

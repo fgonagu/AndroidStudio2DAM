@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        // Inicializamos el Gestos de Sonidos
+        // Inicializamos el Gestor de Sonidos
         gameSounds = new Sounds(this);
 
         // Vinculación de vistas
@@ -149,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
         // 3. Configurar el turno inicial y UI
         turno = 1; // El usuario (1) siempre empieza
         tvTitulo.setText(R.string.app_name);
-        // Necesitaremos un metodo para actualizar el ícono de turno (ivTurno) más tarde.
     }
 
     @SuppressLint("SetTextI18n")
@@ -181,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupBoardListeners(){
         for (int posicion = 0; posicion < 9; posicion++) {
 
-            // Usamos el tag para sociar la vista con el índice del tablero lógico
+            // Usamos el tag para asociar la vista con el índice del tablero lógico
             casillas[posicion].setTag(posicion);
             casillas[posicion].setOnClickListener(v -> {
                 // Solo permitimos la jugada si el juego está iniciado y es el turno del usuario (1)
@@ -227,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean comprobarGanador(int jugador){
         for(int[] linea : LINEAS_GANADORAS){
             if(tablero[linea[0]] == jugador && tablero[linea[1]] == jugador && tablero[linea[2]] == jugador){
-                return true; // Devuelve true si encunetra una línea
+                return true; // Devuelve true si encuentra una línea
             }
         }
         return false;
@@ -261,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
         }
 
-    //Metodo para finalizar el juego: detiene la partida y muestra el resutlado
+    //Metodo para finalizar el juego: detiene la partida y muestra el resultado
     @SuppressLint("SetTextI18n")
     private void finalizarPartida(int resultado){
         // 1. Detenemos el juego y deshabilitamos casillas

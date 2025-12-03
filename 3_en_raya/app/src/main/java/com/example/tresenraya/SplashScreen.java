@@ -15,7 +15,7 @@ public class SplashScreen extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash_screen); // Asegúrate de crear este layout
+        setContentView(R.layout.activity_splash_screen);
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             // Lanzar la Activity principal
