@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.time.Year;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -89,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
         //Convertimos el año de nacimiento a int
         anioNacimiento = Integer.parseInt(anioStr);
         //Para calcular la edad para la fórmula de Perrault
-        //Obtenemos primero el año actual
-        int anioActual = Year.now().getValue();
+        //Obtenemos primero el año actual usando Calendar
+        int anioActual = Calendar.getInstance().get(Calendar.YEAR);
         //Calculamos la edad restando al año actual el año de nacimiento
         int edad = anioActual - anioNacimiento;
 
