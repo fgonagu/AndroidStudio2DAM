@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 9; i++) {
             tablero[i] = 0; // Limpiar la matriz lógica (0 = vacía)
             casillas[i].setEnabled(true); // Habilitar interacción con el tablero
-            casillas[i].setImageDrawable(null); // Limpiar las imágenes
+            casillas[i].setImageResource(R.drawable.starticon); // Limpiar las imágenes
         }
 
         // 2. Deshabilitar la selección de dificultad
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 9; i++) {
             tablero[i] = 0;
             casillas[i].setEnabled(false);
-            casillas[i].setImageDrawable(null);
+            casillas[i].setImageResource(R.drawable.starticon);
         }
 
         // 2. Habilitar la selección de dificultad y limpiar la selección
